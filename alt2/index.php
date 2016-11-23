@@ -60,11 +60,84 @@
 					 </div>
 					      <div class="modal-body">
 					      	<form class="form-email">
-		                        <input type="text" class="validate-required" name="name" placeholder="Namn">
-		                        <input type="text" class="validate-required validate-email" name="email" placeholder="Fordonets namn">
-		                        <input type="text" name="city" placeholder="Stad">
-		                        <textarea class="validate-required" name="message" rows="4" placeholder="Meddelande"></textarea>
-		                        <button type="submit">Skicka in anmälan</button>
+							
+							<div class="row">
+								<div class="col-md-6">
+									<b>Fullständigt namn</b>
+									<input type="text" class="validate-required" name="name">
+								</div><!-- /.col-md-6 -->
+								<div class="col-md-6">
+									<b>Telefonnummer</b>
+									<input type="text" class="validate-required" name="phone">
+								</div><!-- /.col-md-6 -->
+
+									<div class="col-md-6">
+									<b>Stad</b>
+									<input type="text" class="validate-required" name="city">
+									</div><!-- /.col-md-6 -->
+									<div class="col-md-6">
+										<b>E-post</b>
+										<input type="text" class="validate-required" name="email">
+									</div><!-- /.col-md-6 -->
+
+									<hr style="width:90%;margin:0 auto;" class="mt24 pb24">
+
+									<div class="col-md-6">
+									<b>Typ av fordon</b>
+										<div class="select-option">
+										    <i class="ti-angle-down"></i>
+										    <select name="car">
+										        <option value="">Lastbil</option>
+										        <option value="">Motorcykel</option>
+										        <option value="">Hjullastare</option>
+										        <option value="">Moped</option>
+										    </select>
+										</div>
+									</div><!-- /.col-md-6 -->
+									<div class="col-md-6">
+									<b>Årsmodell</b>
+										<div class="select-option">
+										    <i class="ti-angle-down"></i>
+										    <select name="age">
+										        <?php
+
+									        	foreach (range(2016, 1987) as $number) {
+												    echo "<option value='$number'>$number</option>";
+												}
+
+										        ?>
+										        <option value="veteran">Veteran</option>
+										    </select>
+										</div>
+									</div><!-- /.col-md-6 -->
+
+
+									<div class="col-md-6">
+									<b>Påbyggnad</b>
+										<div class="select-option">
+										    <i class="ti-angle-down"></i>
+												<select name="age" id="">
+													<option value="">Timmer</option>
+													<option value="">Skåp</option>
+													<option value="">Släp</option>
+												</select>
+										</div>
+									</div><!-- /.col-md-6 -->
+									<div class="col-md-6">
+							
+									<b>Queen of the road</b><br>
+									<div class="checkbox-option" style="margin-top:10px">
+                                        <div class="inner"></div>
+                                        <input type="checkbox" name="webdesign" value="webdesign">
+                                    </div>
+										
+									</div><!-- /.col-md-6 -->
+
+									<div class="col-md-12">
+										<button type="submit">Skicka in anmälan</button>
+									</div>
+								</div>
+								
 		                    </form>
 
 					      </div>
