@@ -1,0 +1,6 @@
+ATT GÖRA
+
+- Göra klart anmälningsformuläret [väntar på svar från Truckmeet]
+- Skapa anmälan för företag (ev. förtydliga var företag ska klicka) [väntar på svar från Truckmeet]
+- Skapa modal för när man klickat på ett fordon i galleriet
+- Köpa domän kristianstadtruckmeet.se [2016-12-17]
