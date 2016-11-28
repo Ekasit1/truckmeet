@@ -16,15 +16,6 @@
         <link href='http://fonts.googleapis.com/css?family=Lato:300,400%7CRaleway:100,400,300,500,600,700%7COpen+Sans:400,500,600' rel='stylesheet' type='text/css'>
     </head>
     <body>
-				
-	<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/sv_SE/sdk.js#xfbml=1&version=v2.8";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
 		
 		<div class="main-container">
 		<section class="image-slider slider-all-controls controls-inside parallax pt0 pb0 height-70">
@@ -183,32 +174,64 @@
 
 		<!-- NEWS SECTION COMES HERE -->
 
+<?php
+function fetchUrl($url){
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+// You may need to add the line below
+// curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+$feedData = curl_exec($ch);
+curl_close($ch);
+return $feedData;
+}
+$addr = "graph.facebook.com";
+$id = "288214184907514";
+$key = "8e226d9b4001a5c419bb582a04cf5261";
+$pageid = "truckmeetkristianstad";
+$end = "/v2.8/".$pageid."/feed";
+
+$profile_id = $pageid;
+//App Info, needed for Auth
+$app_id = $id;
+$app_secret = $key;
+//Retrieve auth token
+$authToken = fetchUrl("https://graph.facebook.com/oauth/access_token?grant_type=client_credentials&client_id={$app_id}&client_secret={$app_secret}");
+$json_object = fetchUrl("https://graph.facebook.com/{$profile_id}/feed?{$authToken}");
+$data = JSON_decode($json_object);
+
+foreach ($data as $posts) {
+	foreach ($posts as $post) {
+		if (isset($post->message)) {
+				$postMessage = $post->message;
+				$postDatetime = $post->created_time;
+				break;
+			}
+	}
+}
+
+?>
+
 			<section class="bg-secondary">
 		        <div class="container">
 		            <div class="row">
 		                <div class="col-sm-10 col-sm-offset-1">
-		                    <div class="post-snippet mb64">
+		                    <div class="post-snippet mb24">
 		                        
 		                        <div class="post-title">
-		                            <span class="label">25 oktober 2016</span>
-		                            <h4 class="inline-block">Senaste nytt</h4>
+		                            <h4 class="inline-block uppercase">Senaste nytt</h4>
 		                        </div>
 		                        <ul class="post-meta">
 		                            <li>
-		                                <i class="ti-user"></i>
-		                                <span>Skrivet av
-		                                    <a href="#">Peter &amp; Jörgen</a>
-		                                </span>
+		                                <i class="ti-calendar"></i>
+		                                <span><?php echo substr($postDatetime, 0, 10) . " " . substr($postDatetime, 11, 5) ?></span>
 		                            </li>
 		                        </ul>
 		                        <hr>
-		                        <p class="lead">
-		                            Hej alla! Nu är det bestämt att det blir truckmeet även nästa år 2017 på samma plats datum 29-30 April.
-		                        </p>
 		                        <p>
-		                            En efterfrågad nyhet för utställande företag är att det kommer att bli ett "företagstorg" där alla företag är samlade på samma plats.
-Kommer även en ny hemsida som är under uppbyggnad.
-		                        </p> 	
+		                            <?php echo nl2br($postMessage); ?>
+		                        </p>
 		                    </div>
 		                    
 		                    <hr>
@@ -378,7 +401,7 @@ Kommer även en ny hemsida som är under uppbyggnad.
 					
 						<div class="col-sm-4 text-center">
 							<span class="fade-half">
-								<a href="#">Privacy</a> | <a href="">Terms</a><br>
+								<a href="#">Privacy</a> | <a href="tos.html" target="_blank">Terms</a><br>
 								&copy; Kristianstad TruckMeet 2016<br>
 								Sidan skapad av TE15 på IT-Gymnasiet Kristianstad.
 							</span>
