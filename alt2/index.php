@@ -1,3 +1,11 @@
+<?php
+ob_implicit_flush();
+error_reporting(E_ALL);
+
+require('sql.php');
+
+?>
+
 
 <!doctype html>
 <html lang="en">
@@ -29,8 +37,8 @@
 		                        <div class="col-md-10 col-md-offset-1">
 		                            <h2 class="mb-xs-16"><img src="img/ktm/logo-white.png"></h2>
 		                            <p class="lead mb40">Familjeutställning med lastbilar, bilar, maskiner, traktorer och mycket mer</p>
-		                            <a class="btn btn-lg inner-link" href="#cars">se anmälda bilar</a>
-		                            <a class="btn btn-lg btn-filled" data-toggle="modal" data-target=".bs-example-modal-lg">anmäl dig nu</a><br>
+		                            <a class="btn btn-lg inner-link" href="#cars">se anmälningar</a>
+		                            <a class="btn btn-lg btn-filled" data-toggle="modal" data-target=".registerModal">anmäl dig nu</a><br>
 		                            
 		                        </div>
 		                    </div>
@@ -42,7 +50,7 @@
 		    </section>
 
 
-			<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+			<div class="modal fade registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 					<div class="modal-header">
@@ -136,6 +144,26 @@
 			  </div>
 			</div>
 
+<div class="modal fade vehicleModal" tabindex="-1" role="dialog" aria-labelledby="vehicleModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+		<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Fordon titel</h4>
+		 </div>
+		      <div class="modal-body" id="vehicleInfo">
+					
+				Laddar....
+
+		      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+
 		    <section>
 		        <div class="container">
 		            <div class="row v-align-children">
@@ -156,9 +184,17 @@
 		                <div class="col-md-4 col-sm-6">
 		                    <div class="pricing-table pt-1 text-center emphasis">
 		                        <h5 class="uppercase">Hittils har</h5>
-		                        <span class="price">23</span>
+		                        <span class="price"><?php
+
+								$query = "SELECT COUNT(*) as c FROM vehicles;";
+									$sql = new sql;
+									$result = $sql->get($query);
+
+									echo $result[0]['c'];
+
+		                        ?></span>
 		                        <p class="lead">anmält sig</p>
-		                        <a class="btn btn-white btn-lg" href="#">ANMÄL DITT FORDON</a>
+		                        <a class="btn btn-white btn-lg" data-toggle="modal" data-target=".registerModal">ANMÄL DITT FORDON</a>
 		                        <p>
 		                            Företag? <a href="#">Anmäl Er här</a>
 		                        </p>
@@ -201,15 +237,13 @@ $authToken = fetchUrl("https://graph.facebook.com/oauth/access_token?grant_type=
 $json_object = fetchUrl("https://graph.facebook.com/{$profile_id}/feed?{$authToken}");
 $data = JSON_decode($json_object);
 
-foreach ($data as $posts) {
-	foreach ($posts as $post) {
+	foreach ($data->data as $post) {
 		if (isset($post->message)) {
 				$postMessage = $post->message;
 				$postDatetime = $post->created_time;
 				break;
 			}
-	}
-}
+		}
 
 ?>
 
@@ -267,69 +301,31 @@ foreach ($data as $posts) {
 		            
 		            <div class="row">
 		                <div class="col-sm-12">
-		                    <div class="lightbox-grid square-thumbs" data-gallery-title="Gallery">
+		                    <div class="lightbox-grid square-thumbs">
 		                        <ul>
+		                        <?php
+
+								$query = "SELECT * FROM vehicles ORDER BY id DESC;";
+									$sql = new sql;
+									$result = $sql->get($query);
+									foreach($result as $row) {
+										echo "
 		                            <li>
-		                                <a href="http://h24-original.s3.amazonaws.com/167185/16187083-V3sC1.jpg" data-lightbox="true">
-		                                    <div class="background-image-holder">
-		                                        <img alt="image" class="background-image" src="http://h24-original.s3.amazonaws.com/167185/16187083-V3sC1.jpg">
+		                                <a data-toggle='modal' data-target='.vehicleModal' class='vehicle ".$row['id']."'>
+		                                    <div class='background-image-holder'>
+		                                        <img alt='image' class='background-image' src='img/vehicles/".$row['image']."'>
 		                                    </div>
 		                                </a>
 		                            </li>
-		                            <li>
-		                                <a href="img/home12.jpg" data-lightbox="true">
-		                                    <div class="background-image-holder">
-		                                        <img alt="image" class="background-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Scania_porteur_benne_tp.jpeg/250px-Scania_porteur_benne_tp.jpeg">
-		                                    </div>
-		                                </a>
-		                            </li>
-		                            <li>
-		                                <a href="img/home14.jpg" data-lightbox="true">
-		                                    <div class="background-image-holder">
-		                                        <img alt="image" class="background-image" src="img/ktm/nopic.jpg">
-		                                    </div>
-		                                </a>
-		                            </li>
-		                            <li>
-		                                <a href="img/home17.jpg" data-lightbox="true">
-		                                    <div class="background-image-holder">
-		                                        <img alt="image" class="background-image" src="img/home17.jpg">
-		                                    </div>
-		                                </a>
-		                            </li>
-		                            <li>
-		                                <a href="img/cover5.jpg" data-lightbox="true">
-		                                    <div class="background-image-holder">
-		                                        <img alt="image" class="background-image" src="img/cover5.jpg">
-		                                    </div>
-		                                </a>
-		                            </li>
-		                            <li>
-		                                <a href="img/cover6.jpg" data-lightbox="true">
-		                                    <div class="background-image-holder">
-		                                        <img alt="image" class="background-image" src="img/cover6.jpg">
-		                                    </div>
-		                                </a>
-		                            </li>
-		                            <li>
-		                                <a href="img/cover7.jpg" data-lightbox="true">
-		                                    <div class="background-image-holder">
-		                                        <img alt="image" class="background-image" src="img/cover7.jpg">
-		                                    </div>
-		                                </a>
-		                            </li>
-		                            <li>
-		                                <a href="img/cover8.jpg" data-lightbox="true">
-		                                    <div class="background-image-holder">
-		                                        <img alt="image" class="background-image" src="img/cover8.jpg">
-		                                    </div>
-		                                </a>
-		                            </li>
+										";
+									}
+
+		                        ?>
 		                        </ul>
-		                    </div>
+		                    </div><!-- ./ligtbox-grid -->
 		                    
-		                </div>
-		            </div>
+		                </div><!-- ./col-sm-12 -->
+		            </div><!-- ./row -->
 		            
 		        </div>
 		        
@@ -342,7 +338,7 @@ foreach ($data as $posts) {
 		            <div class="row">
 		                <div class="col-sm-12 text-center">
 		                    <h3 class="mb0 inline-block p32 p0-xs">Anmäl ditt fordon direkt!</h3>
-		                    <a class="btn btn-lg btn-white mb8 mt-xs-24" href="#">anmäl dig nu</a>
+		                    <a class="btn btn-lg btn-white mb8 mt-xs-24" data-toggle="modal" data-target=".registerModal">anmäl dig nu</a>
 		                </div>
 		            </div>
 		            
@@ -352,7 +348,7 @@ foreach ($data as $posts) {
 		        <div class="container">
 		            <div class="row">
 		                <div class="col-sm-6 col-md-5">
-		                    <h4 class="uppercase"></h4>
+		                    <h4 class="uppercase">Kontakta oss</h4>
 		                    <p>
 		                        Har du några frågor eller funderingar angående eventet? Tveka inte att höra av dig. Vi finns tillgängliga på kontaktuppgifterna nedan, men du kan också fylla i kontaktformuläret så återkommer vi till dig så snabbt vi kan.
 		                    </p>
