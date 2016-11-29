@@ -1314,6 +1314,13 @@ var mr_cookies = {
   }
 };
 
+
+// show car in modal on click
+$('.vehicle').click(function(){
+    $("#vehicleInfo").empty().html('LADDAR');
+    $("#vehicleInfo").load('vehicle.php?id=' + this.className.split(' ')[1]);
+});
+
 /*\
 |*|  END COOKIE LIBRARY
 \*/
