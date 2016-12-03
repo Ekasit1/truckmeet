@@ -4,10 +4,15 @@ session_start();
 $id = $_GET['id'];
 
 require('sql.php');
+$db = new sql;
 
-$query = "SELECT * FROM vehicles WHERE id = $id;";
-$sql = new sql;
-$result = $sql->get($query);
+$stmt = $db->sql()->prepare("SELECT * FROM vehicles WHERE id=?");
+$stmt->execute([$id]);
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo "<pre>";
+print_r($rows);
+die();
 
 ?>
 
