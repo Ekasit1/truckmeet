@@ -1,9 +1,13 @@
 <?php
 ob_implicit_flush();
 error_reporting(E_ALL);
+session_start();
 
 require('sql.php');
 
+if (isAdmin()) {
+	echo "<a href='logout.php'>Logga ut</a>";	
+}
 ?>
 
 
@@ -58,7 +62,7 @@ require('sql.php');
 					        <h4 class="modal-title" id="myModalLabel">Anmälan till Kristianstad Truckmeet 2016</h4>
 					 </div>
 					      <div class="modal-body">
-					      	<form class="form-email">
+					      	<form action="" method="POST">
 							
 							<div class="row">
 								<div class="col-md-6">
@@ -85,11 +89,9 @@ require('sql.php');
 									<b>Typ av fordon</b>
 										<div class="select-option">
 										    <i class="ti-angle-down"></i>
-										    <select name="car">
-										        <option value="">Lastbil</option>
-										        <option value="">Motorcykel</option>
-										        <option value="">Hjullastare</option>
-										        <option value="">Moped</option>
+										    <select name="carType">
+										        <option value="Lastbil">Lastbil</option>
+										        <option value="Hjullastare">Hjullastare</option>
 										    </select>
 										</div>
 									</div><!-- /.col-md-6 -->
@@ -97,7 +99,7 @@ require('sql.php');
 									<b>Årsmodell</b>
 										<div class="select-option">
 										    <i class="ti-angle-down"></i>
-										    <select name="age">
+										    <select name="carYear">
 										        <?php
 
 									        	foreach (range(2016, 1987) as $number) {
@@ -105,7 +107,7 @@ require('sql.php');
 												}
 
 										        ?>
-										        <option value="veteran">Veteran</option>
+										        <option value="Veteran">Veteran</option>
 										    </select>
 										</div>
 									</div><!-- /.col-md-6 -->
@@ -115,10 +117,10 @@ require('sql.php');
 									<b>Påbyggnad</b>
 										<div class="select-option">
 										    <i class="ti-angle-down"></i>
-												<select name="age" id="">
-													<option value="">Timmer</option>
-													<option value="">Skåp</option>
-													<option value="">Släp</option>
+												<select name="carAddon">
+													<option value="Timmer">Timmer</option>
+													<option value="Skåp">Skåp</option>
+													<option value="Släp">Släp</option>
 												</select>
 										</div>
 									</div><!-- /.col-md-6 -->
@@ -127,13 +129,13 @@ require('sql.php');
 									<b>Queen of the road</b><br>
 									<div class="checkbox-option" style="margin-top:10px">
                                         <div class="inner"></div>
-                                        <input type="checkbox" name="webdesign" value="webdesign">
+                                        <input type="checkbox" name="queen" value="1">
                                     </div>
 										
 									</div><!-- /.col-md-6 -->
 
 									<div class="col-md-12">
-										<button type="submit">Skicka in anmälan</button>
+										<input type="submit" value="Skicka in anmälan">
 									</div>
 								</div>
 								
@@ -399,7 +401,7 @@ $data = JSON_decode($json_object);
 							<span class="fade-half">
 								<a href="#">Privacy</a> | <a href="tos.html" target="_blank">Terms</a><br>
 								&copy; Kristianstad TruckMeet 2016<br>
-								Sidan skapad av TE15 på IT-Gymnasiet Kristianstad.
+								Sidan skapad av TE15 på IT-Gymnasiet Kristianstad. <a href='login.php'>(L)</a>
 							</span>
 						</div>
 					

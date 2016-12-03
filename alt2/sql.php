@@ -40,4 +40,18 @@ class sql {
 		return self::$con->lastInsertId();
 	}
 }
+
+function isAdmin(){
+	if (isset($_SESSION['admin'])) {
+		if ($_SESSION['admin'] == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+
+
 ?>

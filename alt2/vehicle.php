@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 $id = $_GET['id'];
 
 require('sql.php');
@@ -21,6 +22,12 @@ $result = $sql->get($query);
 				<td><b>Chaufför</b></td>
 				<td><?php echo $result[0]['name'] ?></td>
 			</tr>
+			<?php
+			echo isAdmin() ? '<tr><td><b>Telefonnummer</b></td><td>'.$result[0]['phone'].'</td></tr>' : '';
+			?>
+			<?php
+			echo isAdmin() ? '<tr><td><b>E-post</b></td><td>'.$result[0]['email'].'</td></tr>' : '';
+			?>
 			<tr>
 				<td><b>Stad</b></td>
 				<td><?php echo $result[0]['city'] ?></td>
@@ -33,10 +40,7 @@ $result = $sql->get($query);
 				<td><b>Årsmodell</b></td>
 				<td><?php echo $result[0]['vehicleYear'] ?></td>
 			</tr>
-			<tr>
-				<td><b>Beskrivning</b></td>
-				<td>Fyrväxlad 18-hästars cykel. <a href='#'>Läs mer</a></td>
-			</tr>
+
 		</table>
 	</div><!-- /.col-md-6 -->
 
