@@ -1,6 +1,6 @@
 <?php
-ob_implicit_flush();
-error_reporting(E_ALL);
+// ob_implicit_flush();
+// error_reporting(E_ALL);
 session_start();
 
 require('sql.php');
@@ -8,8 +8,8 @@ require('sql.php');
 if (isAdmin()) {
 	echo "<a href='logout.php'>Logga ut</a>";	
 }
-?>
 
+?>
 
 <!doctype html>
 <html lang="en">
@@ -62,16 +62,16 @@ if (isAdmin()) {
 					        <h4 class="modal-title" id="myModalLabel">Anmälan till Kristianstad Truckmeet 2016</h4>
 					 </div>
 					      <div class="modal-body">
-					      	<form action="" method="POST">
+					      	<form action="register.php" method="POST">
 							
 							<div class="row">
 								<div class="col-md-6">
 									<b>Fullständigt namn</b>
-									<input type="text" class="validate-required" name="name">
+									<input type="text" class="validate-required" name="name" required>
 								</div><!-- /.col-md-6 -->
 								<div class="col-md-6">
 									<b>Telefonnummer</b>
-									<input type="text" class="validate-required" name="phone">
+									<input type="text" class="validate-required" name="phone" required>
 								</div><!-- /.col-md-6 -->
 
 									<div class="col-md-6">
@@ -80,7 +80,7 @@ if (isAdmin()) {
 									</div><!-- /.col-md-6 -->
 									<div class="col-md-6">
 										<b>E-post</b>
-										<input type="text" class="validate-required" name="email">
+										<input type="text" class="validate-required" name="email" required>
 									</div><!-- /.col-md-6 -->
 
 									<hr style="width:90%;margin:0 auto;" class="mt24 pb24">
@@ -118,6 +118,7 @@ if (isAdmin()) {
 										<div class="select-option">
 										    <i class="ti-angle-down"></i>
 												<select name="carAddon">
+													<option value="Ingen">Ingen påbyggnad</option>
 													<option value="Timmer">Timmer</option>
 													<option value="Skåp">Skåp</option>
 													<option value="Släp">Släp</option>
@@ -400,8 +401,8 @@ $data = JSON_decode($json_object);
 						<div class="col-sm-4 text-center">
 							<span class="fade-half">
 								<a href="#">Privacy</a> | <a href="tos.html" target="_blank">Terms</a><br>
-								&copy; Kristianstad TruckMeet 2016<br>
-								Sidan skapad av TE15 på IT-Gymnasiet Kristianstad. <a href='login.php'>(L)</a>
+								&copy; Kristianstad TruckMeet 2016 <a href='login.php'>(L)</a><br>
+								Sidan skapad av TE15 på IT-Gymnasiet Kristianstad.
 							</span>
 						</div>
 					
