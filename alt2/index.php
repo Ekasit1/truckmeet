@@ -5,10 +5,6 @@ session_start();
 
 require('sql.php');
 
-if (isAdmin()) {
-	echo "<a href='logout.php'>Logga ut</a>";	
-}
-
 ?>
 
 <!doctype html>
@@ -30,6 +26,12 @@ if (isAdmin()) {
     <body>
 		
 		<div class="main-container">
+
+		<?php
+		if (isAdmin()) {	
+			echo "<a class='btn btn-lg btn-rounded btn-filled btn-logout' href='logout.php'>Logga ut</a>";	
+		} ?>
+
 		<section class="image-slider slider-all-controls controls-inside parallax pt0 pb0 height-70">
 		        <ul class="slides">
 		            <li class="overlay image-bg">

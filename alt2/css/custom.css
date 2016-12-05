@@ -3,3 +3,10 @@
   br {
     display: initial;
   }
+
+  .btn-logout {
+  	z-index: 999;
+  	position: fixed;
+  	top: 20px;
+  	right: 25px;
+  }
