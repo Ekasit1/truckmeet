@@ -8,11 +8,8 @@ $db = new sql;
 
 $stmt = $db->sql()->prepare("SELECT * FROM vehicles WHERE id=?");
 $stmt->execute([$id]);
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-echo "<pre>";
-print_r($rows);
-die();
 
 ?>
 
